@@ -1,3 +1,5 @@
+package G_FS;
+
 import java.util.Date;
 
 public class BaseFsItem {
@@ -6,7 +8,6 @@ public class BaseFsItem {
     private Date creationDate;
 
     public BaseFsItem(String name) {
-        System.out.println("BasesFsItem constructor");
         this.name = name;
         this.creationDate = new Date();
     }

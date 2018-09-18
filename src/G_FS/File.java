@@ -1,14 +1,16 @@
+package G_FS;
+
 public class File extends BaseFsItem {
-    private long size;
+
+    private float size;
 
     public File(String name, long size) {
         super(name);
-        System.out.println("File constructor");
         this.size = size;
     }
 
     @Override
     public String toString() {
-        return this.name + this.size;
+        return String.format("%4.2f %s", this.size, this.name);
     }
 }
