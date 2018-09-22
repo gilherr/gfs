@@ -4,11 +4,29 @@ import java.util.Date;
 
 public class BaseFsItem {
 
-    protected String name; // Should i trim over 32 chars?
-    private Date creationDate;
+     String name;
+     Date creationDate;
+     Directory parent = null;
 
     public BaseFsItem(String name) {
-        this.name = name;
+        this.name = name.length() <= 32 ? name : name.substring(0,32);
         this.creationDate = new Date();
     }
+
+    public void setParent(Directory parent) {
+        this.parent = parent;
+    }
+
+    public Directory getParent(){
+        return this.parent;
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
+     void print() {
+        System.out.println(this.name);
+    }
+
 }
