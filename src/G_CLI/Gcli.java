@@ -1,25 +1,21 @@
 package G_CLI;
 
-import G_FS.Directory;
-import G_FS.File;
+import G_FS.Explorer;
+import G_FS.Gxplorer;
 
 import java.util.HashMap;
 import java.util.Map;
 
-interface Command {
-    void run(String[] args);
-}
-
 public class Gcli {
 
     private Map<String, Command> commands;
-    private Directory root = new Directory("","/");
-    private Directory currentDir = root;
+    private Gxplorer explorer = new Gxplorer();
 
     public void activate(){
 
         printWelcomeMessage();
         buildCommandsMap();
+        buildMockFolderTree();
 
         UserInput userInput = new UserInput();
         boolean userDidntQuit = true;
@@ -33,6 +29,24 @@ public class Gcli {
 
     }
 
+    private void buildMockFolderTree() {
+        this.explorer.addFile("/","file_1",10);
+        this.explorer.addFile("/","file_2",20);
+
+        this.explorer.addDir("/","dir_b");
+        this.explorer.addFile("dir_b","file_b1",30);
+        this.explorer.addFile("dir_b","file_b2",40);
+
+        this.explorer.addDir("/","dir_a");
+        this.explorer.addDir("dir_a","dir_b");
+        this.explorer.addDir("dir_b","dir_c");
+        this.explorer.addDir("dir_c","dir_d");
+        this.explorer.addFile("dir_c","file_c1",40);
+        this.explorer.addFile("dir_c","file_c2",40);
+
+        this.explorer.setCurrentDir("/");
+    }
+
     private void executeCommand(UserInput ui) {
         if(commandAvailable(ui.command))
             this.commands.get(ui.command).run(ui.args);
@@ -41,7 +55,8 @@ public class Gcli {
     }
 
     private void printPrompt() {
-        System.out.print(this.currentDir.getFullPath() + " $ ");
+        String curPath = this.explorer.getCurrentDirPath();
+        System.out.print(curPath + " $ ");
     }
 
     private void printWelcomeMessage() {
@@ -59,41 +74,59 @@ public class Gcli {
         // cli commands
         this.commands.put(""        , (String[] args) -> {});
         this.commands.put("help"    , this::printHelp);
-        this.commands.put("cd"      , this::changeDir);
+        this.commands.put("pwd"     , this::printPath);
         this.commands.put("exit"    , (String[] args) -> {});
+        this.commands.put("cd"      , this::changeDir);
 
         // fs commands
-        this.commands.put("addFile" , (String[] args) -> System.out.println("addFile"));
-        this.commands.put("touch"   , (String[] args) -> System.out.println("addFile"));
+        this.commands.put("addFile" , this::addFile);
+        this.commands.put("touch"   , this::addFile);
 
-        this.commands.put("addDir"  , (String[] args) -> System.out.println("addDir"));
-        this.commands.put("mkdir"   , (String[] args) -> System.out.println("addDir"));
+        this.commands.put("addDir"  , this::addDir);
+        this.commands.put("mkdir"   , this::addDir);
 
         this.commands.put("delete"  , (String[] args) -> System.out.println("delete"));
         this.commands.put("rm"      , (String[] args) -> System.out.println("delete"));
 
-        this.commands.put("ls"      , (String[] args) -> System.out.println("showFileSystem"));
-        this.commands.put("showFileSystem", (String[] args) -> System.out.println("showFileSystem"));
+        this.commands.put("ls"      , this::showFileSystem);
+        this.commands.put("showFileSystem", this::showFileSystem);
     }
 
     private void changeDir(String[] args) {
-        if(args[0].equals("..")){
-            if(this.currentDir.getName().equals("/"))
-                return;
-            if(this.currentDir.getPath().equals("/")){
-                this.currentDir = this.root;
-                return;
-            }
-            this.root.findOnPath(this.currentDir.getPath());
-            this.currentDir = this.currentDir.getParent();
+        if(args.length == 0)
+            this.explorer.setCurrentDir("/");
+        else
+            this.explorer.setCurrentDir(args[0]);
+
+    }
+
+    private void printPath(String[] args) {
+        //TODO write this function
+    }
+
+    private void showFileSystem(String[] args){
+        this.explorer.showFileSystem();
+    }
+
+    private void addFile(String[] args){
+        if(args.length < 3){
+            System.out.println("addFile: missing operands: addFile <parentName> <name> <size>");
             return;
         }
+        String parentName = args[0];
+        String name = args[1];
+        int size = Integer.parseInt(args[2]);
+        this.explorer.addFile(parentName, name, size);
+    }
 
-        Directory targetDir = this.currentDir.find(args[0]);
-        if(targetDir != null)
-            this.currentDir = targetDir;
-        else
-            System.out.println("Directory not found");
+    private void addDir(String[] args){
+        if(args.length < 2){
+            System.out.println("addDir: missing operands: addFile <parentName> <name>");
+            return;
+        }
+        String parentName = args[0];
+        String name = args[1];
+        this.explorer.addDir(parentName, name);
     }
 
     private void printHelp(String[] args){

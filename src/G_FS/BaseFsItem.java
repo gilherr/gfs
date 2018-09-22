@@ -17,6 +17,18 @@ public class BaseFsItem {
         this.parent = parent;
     }
 
+    public String getFullPath(){
+        if(this.name == "/") return "/";
+        return getFullPathRecursive(this, "");
+    }
+
+    private String getFullPathRecursive(BaseFsItem item, String path){
+        if(item.name.equals("/"))
+            return "";
+        String ret = getFullPathRecursive(item.parent, path);
+        return ret + "/" + item.name;
+    }
+
     public Directory getParent(){
         return this.parent;
     }

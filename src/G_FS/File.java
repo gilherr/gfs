@@ -5,9 +5,9 @@ import java.text.SimpleDateFormat;
 
 public class File extends BaseFsItem {
 
-    private double size;
+    private int size;
 
-    public File(String name, double size) {
+    public File(String name, int size) {
         super(name);
         this.size = size;
     }
