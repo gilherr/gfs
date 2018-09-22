@@ -1,5 +1,8 @@
 package G_CLI;
 
+import G_FS.Directory;
+import G_FS.File;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +13,8 @@ interface Command {
 public class Gcli {
 
     private Map<String, Command> commands;
-    private String currentDir = "/";
+    private Directory root = new Directory("","/");
+    private Directory currentDir = root;
 
     public void activate(){
 
@@ -37,7 +41,7 @@ public class Gcli {
     }
 
     private void printPrompt() {
-        System.out.print(this.currentDir + " $ ");
+        System.out.print(this.currentDir.getFullPath() + " $ ");
     }
 
     private void printWelcomeMessage() {
@@ -51,17 +55,45 @@ public class Gcli {
 
     private void buildCommandsMap(){
         this.commands = new HashMap<>();
-        this.commands.put("help", this::printHelp);
+
+        // cli commands
+        this.commands.put(""        , (String[] args) -> {});
+        this.commands.put("help"    , this::printHelp);
+        this.commands.put("cd"      , this::changeDir);
+        this.commands.put("exit"    , (String[] args) -> {});
+
+        // fs commands
         this.commands.put("addFile" , (String[] args) -> System.out.println("addFile"));
         this.commands.put("touch"   , (String[] args) -> System.out.println("addFile"));
+
         this.commands.put("addDir"  , (String[] args) -> System.out.println("addDir"));
         this.commands.put("mkdir"   , (String[] args) -> System.out.println("addDir"));
+
         this.commands.put("delete"  , (String[] args) -> System.out.println("delete"));
         this.commands.put("rm"      , (String[] args) -> System.out.println("delete"));
-        this.commands.put("showFileSystem", (String[] args) -> System.out.println("showFileSystem"));
+
         this.commands.put("ls"      , (String[] args) -> System.out.println("showFileSystem"));
-        this.commands.put(""        , (String[] args) -> {});
-        this.commands.put("exit"    , (String[] args) -> {});
+        this.commands.put("showFileSystem", (String[] args) -> System.out.println("showFileSystem"));
+    }
+
+    private void changeDir(String[] args) {
+        if(args[0].equals("..")){
+            if(this.currentDir.getName().equals("/"))
+                return;
+            if(this.currentDir.getPath().equals("/")){
+                this.currentDir = this.root;
+                return;
+            }
+            this.root.findOnPath(this.currentDir.getPath());
+            this.currentDir = this.currentDir.getParent();
+            return;
+        }
+
+        Directory targetDir = this.currentDir.find(args[0]);
+        if(targetDir != null)
+            this.currentDir = targetDir;
+        else
+            System.out.println("Directory not found");
     }
 
     private void printHelp(String[] args){

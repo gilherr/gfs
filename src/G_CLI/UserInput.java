@@ -19,7 +19,7 @@ public class UserInput {
         this.command = split.get(0);
         split.remove(0);
 
-        if(split.size() > 1)
+        if(split.size() > 0)
             this.args = split.toArray(this.args);
     }
 }
