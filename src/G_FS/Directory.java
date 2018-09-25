@@ -25,6 +25,13 @@ public class Directory extends BaseFsItem{
         return super.name;
     }
 
+    /**
+     * Find an item in a directory
+     * @param dir The directory to start the search from
+     * @param name The name of the item that is being searched
+     * @param isRecursive Recursively search sub-directories
+     * @return BaseFsItem if item was found, else null
+     */
     public static BaseFsItem find(Directory dir,String name, Boolean isRecursive){
 
         for(BaseFsItem item: dir.content){
@@ -40,25 +47,21 @@ public class Directory extends BaseFsItem{
         return null;
     }
 
-    private static void printContentRecursively(Directory dir, int depth, Boolean isRecursive){
+    public BaseFsItem find(String name){
+        return Directory.find(this,name,true);
+    }
+
+    private static void printContentRecursively(Directory dir, int indent, Boolean isRecursive){
         for(BaseFsItem item: dir.content){
-            for(int i=0; i<depth*2; i++)
+            for(int i=0; i<indent*2; i++)
                 System.out.print("-");
             item.print();
             if(isRecursive && item instanceof Directory){
-                printContentRecursively((Directory) item, ++depth, isRecursive);
-                depth--;
+                printContentRecursively((Directory) item, ++indent, isRecursive);
+                indent--;
             }
 
         }
-    }
-
-    public Directory findDir(String name){
-        BaseFsItem foundItem = find(this,name,true);
-        if(foundItem instanceof Directory)
-            return (Directory) foundItem;
-        else
-            return null;
     }
 
     public void delete(BaseFsItem item){
@@ -68,13 +71,6 @@ public class Directory extends BaseFsItem{
             return;
         }
 
-        // should be implemented in the cli
-        /*
-        if(item instanceof Directory && ((Directory) item).content.size() > 0){
-            System.out.println("Folder is not empty, delete aborted");
-            return;
-        }
-        */
         this.content.remove(item);
     }
 
