@@ -38,6 +38,11 @@ public class Gxplorer implements ExplorerBasic {
     private void addItem(BaseFsItem item, String parentDirName){
         Directory parent;
 
+        if(isItemExists(item.name)) {
+            System.out.println(Error.ITEM_EXISTS);
+            return;
+        }
+
         BaseFsItem foundItem = Directory.find(this.ground, parentDirName, true);
         Directory foundDir = validateFoundDirectory(foundItem, parentDirName);
 
@@ -56,6 +61,10 @@ public class Gxplorer implements ExplorerBasic {
         else
             System.out.println("error: Cant find " + searchWord);
         return null;
+    }
+
+    private Boolean isItemExists(String itemName) {
+        return Directory.find(this.ground,itemName,true) != null ? true : false;
     }
 
 }
