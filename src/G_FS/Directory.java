@@ -67,7 +67,7 @@ public class Directory extends BaseFsItem{
     public void delete(BaseFsItem item){
 
         if(item.name.equals("/")){
-            System.out.println("Cant delete root folder.");
+            System.out.println(Error.DELETE_ROOT);
             return;
         }
 
