@@ -2,43 +2,20 @@ package G_FS;
 
 public class Gxplorer implements Explorer{
 
-    private Directory ground = new Directory("");
-    private Directory currentDir = null;
+    Directory ground = new Directory("");
 
     public Gxplorer() {
         this.ground.addItem(new Directory("/"));
     }
 
-    public void setCurrentDir(String name){
-        Directory foundDir = this.ground.findDir(name);
-        if(foundDir != null)
-            this.currentDir = foundDir;
-        else
-            System.out.println("Cant find " + name);
-    }
-
-    public String getCurrentDirPath(){
-        return this.currentDir.getFullPath();
-    }
-
-    // Basic requested functions
-
     public void addFile (String parentDirName, String fileName, int fileSize){
-        File file = new File(fileName, fileSize);
-        Directory parent = this.ground.findDir(parentDirName);
-        file.setParent(parent);
-        parent.addItem(file);
+        File newFile = new File(fileName, fileSize);
+        addItem(newFile, parentDirName);
     }
 
     public void addDir (String parentDirName, String dirName){
-        Directory dir = new Directory(dirName);
-        Directory parent = this.ground.findDir(parentDirName);
-        if(parent != null){
-            dir.setParent(parent);
-            parent.addItem(dir);
-        }
-        else
-            System.out.println("Cant find " + parentDirName);
+        Directory newDir = new Directory(dirName);
+        addItem(newDir, parentDirName);
     }
 
     public void delete (String name){
@@ -55,6 +32,41 @@ public class Gxplorer implements Explorer{
 
     public void showFileSystem (){
         this.ground.printContent(true);
+    }
+
+    /*************************************************/
+
+    private void addItem(BaseFsItem item, String parentDirName){
+        Directory parent;
+
+        BaseFsItem foundItem = this.ground.find(parentDirName);
+        Directory foundDir = validateFoundDirectory(foundItem, parentDirName);
+
+        if(foundDir != null){
+            parent = foundDir;
+            item.setParent(parent);
+            parent.addItem(item);
+        }
+    }
+
+    private Directory validateFoundDirectory(BaseFsItem foundItem, String searchWord){
+        if(foundItem instanceof Directory)
+            return (Directory) foundItem;
+        else if(foundItem instanceof File)
+            System.out.println("error: " + searchWord + " is a file");
+        else
+            System.out.println("error: Cant find " + searchWord);
+        return null;
+    }
+
+    public void setCurrentDir(String name) {
+
+    }
+
+    public void listCurrentFolder() {}
+
+    public String getCurrentDirPath() {
+        return null;
     }
 
 }
