@@ -5,8 +5,6 @@ import java.util.LinkedList;
 public class Directory extends BaseFsItem{
 
     private LinkedList<BaseFsItem> content = new LinkedList<>();
-    private double size = 0;
-    private int itemsCount = 0;
 
     public Directory(String name) {
         super(name);

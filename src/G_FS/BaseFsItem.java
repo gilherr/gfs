@@ -2,23 +2,26 @@ package G_FS;
 
 import java.util.Date;
 
+/**
+ * Describes the basics of any item that the file system holds.
+ */
 public class BaseFsItem {
 
      String name;
      Date creationDate;
      Directory parent = null;
 
-    public BaseFsItem(String name) {
+    BaseFsItem(String name) {
         this.name = name.length() <= 32 ? name : name.substring(0,32);
         this.creationDate = new Date();
     }
 
-    public void setParent(Directory parent) {
+    void setParent(Directory parent) {
         this.parent = parent;
     }
 
-    public String getFullPath(){
-        if(this.name == "/") return "/";
+    String getFullPath(){
+        if(this.name.equals("/")) return "/";
         return getFullPathRecursive(this, "");
     }
 

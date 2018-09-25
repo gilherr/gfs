@@ -33,14 +33,15 @@ public class Gcli {
         this.explorer.addFile("/","file_1",10);
         this.explorer.addFile("/","file_2",20);
 
+        this.explorer.addDir("/","dir_a");
+        this.explorer.addDir("dir_a","dir_aa");
+        this.explorer.addDir("dir_aa","dir_aaa");
+
         this.explorer.addDir("/","dir_b");
         this.explorer.addFile("dir_b","file_b1",30);
         this.explorer.addFile("dir_b","file_b2",40);
 
-        this.explorer.addDir("/","dir_a");
-        this.explorer.addDir("dir_a","dir_b");
         this.explorer.addDir("dir_b","dir_c");
-        this.explorer.addDir("dir_c","dir_d");
         this.explorer.addFile("dir_c","file_c1",40);
         this.explorer.addFile("dir_c","file_c2",40);
 
@@ -103,8 +104,8 @@ public class Gcli {
     }
 
     private void printPath(String[] args) {
-        //TODO write this function
-        System.out.println("path...");
+        String path = this.explorer.getCurrentDirPath();
+        System.out.println(path);
     }
 
     private void showFileSystem(String[] args){
@@ -157,9 +158,10 @@ public class Gcli {
             " addFile <parentName> <name> <size>    Add a new file under the Directory branch\n" +
             " addDir  <parentName> <name>           Add a new Directory under the parent Directory\n" +
             " delete  <name>                        Delete an item found somewhere in the file system\n" +
-            " showFileSystem                        List all files & directories with their hierarchical structure\n" +
+            " showFileSystem, ll                    List all files & directories with their hierarchical structure\n" +
             " rm                                    Delete an item found in current folder with this name\n" +
             " ls                                    List current directory\n" +
+            " pwd                                   Print working directory\n" +
             "\n" +
             "Arguments should not contain spaces\n\n");
 
