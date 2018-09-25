@@ -1,6 +1,6 @@
 package G_FS;
 
-public class GxplorerForCli extends Gxplorer {
+public class GxplorerForCli extends Gxplorer implements ExplorerCli {
 
     private Directory currentDir = null;
 

@@ -1,6 +1,6 @@
 package G_FS;
 
-public class Gxplorer implements Explorer{
+public class Gxplorer implements ExplorerBasic {
 
     Directory ground = new Directory("");
 
@@ -56,16 +56,6 @@ public class Gxplorer implements Explorer{
             System.out.println("error: " + searchWord + " is a file");
         else
             System.out.println("error: Cant find " + searchWord);
-        return null;
-    }
-
-    public void setCurrentDir(String name) {
-
-    }
-
-    public void listCurrentFolder() {}
-
-    public String getCurrentDirPath() {
         return null;
     }
 
