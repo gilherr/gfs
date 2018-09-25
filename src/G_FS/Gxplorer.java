@@ -20,7 +20,6 @@ public class Gxplorer implements ExplorerBasic {
 
     public void delete (String name){
 
-        Directory parent;
         BaseFsItem rmCandidate = Directory.find(this.ground, name, true);
 
         if(rmCandidate == null)
@@ -39,7 +38,7 @@ public class Gxplorer implements ExplorerBasic {
     private void addItem(BaseFsItem item, String parentDirName){
         Directory parent;
 
-        BaseFsItem foundItem = this.ground.find(parentDirName);
+        BaseFsItem foundItem = Directory.find(this.ground, parentDirName, true);
         Directory foundDir = validateFoundDirectory(foundItem, parentDirName);
 
         if(foundDir != null){

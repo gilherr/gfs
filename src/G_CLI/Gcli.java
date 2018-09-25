@@ -1,7 +1,7 @@
 package G_CLI;
 
-import G_FS.Explorer;
-import G_FS.Gxplorer;
+import G_FS.ExplorerCli;
+import G_FS.GxplorerForCli;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +9,7 @@ import java.util.Map;
 public class Gcli {
 
     private Map<String, Command> commands;
-    private Gxplorer explorer = new Gxplorer();
+    private ExplorerCli explorer = new GxplorerForCli();
 
     public void activate(){
 
@@ -44,7 +44,7 @@ public class Gcli {
         this.explorer.addFile("dir_c","file_c1",40);
         this.explorer.addFile("dir_c","file_c2",40);
 
-        this.explorer.setCurrentDir("/");
+        this.explorer.setCurrentDirGlobal("/");
     }
 
     private void executeCommand(UserInput ui) {
@@ -73,35 +73,38 @@ public class Gcli {
 
         // cli commands
         this.commands.put(""        , (String[] args) -> {});
+        this.commands.put("exit"    , (String[] args) -> {});
         this.commands.put("help"    , this::printHelp);
         this.commands.put("pwd"     , this::printPath);
-        this.commands.put("exit"    , (String[] args) -> {});
         this.commands.put("cd"      , this::changeDir);
+        this.commands.put("rm"      , this::deleteFromCurrentDirectory);
+        this.commands.put("ls"      , this::listCurrentFolder);
+        this.commands.put("ll"      , this::showFileSystem);
 
         // fs commands
         this.commands.put("addFile" , this::addFile);
-        this.commands.put("touch"   , this::addFile);
-
         this.commands.put("addDir"  , this::addDir);
-        this.commands.put("mkdir"   , this::addDir);
-
-        this.commands.put("delete"  , (String[] args) -> System.out.println("delete"));
-        this.commands.put("rm"      , (String[] args) -> System.out.println("delete"));
-
-        this.commands.put("ls"      , this::showFileSystem);
+        this.commands.put("delete"  , this::delete);
         this.commands.put("showFileSystem", this::showFileSystem);
+    }
+
+    private void listCurrentFolder(String[] args) {
+        this.explorer.listCurrentFolder();
     }
 
     private void changeDir(String[] args) {
         if(args.length == 0)
-            this.explorer.setCurrentDir("/");
+            this.explorer.setCurrentDirGlobal("/");
+        else if(args[0].equals(".."))
+            this.explorer.changeDirOneStepUp();
         else
-            this.explorer.setCurrentDir(args[0]);
+            this.explorer.setCurrentDirGlobal(args[0]);
 
     }
 
     private void printPath(String[] args) {
         //TODO write this function
+        System.out.println("path...");
     }
 
     private void showFileSystem(String[] args){
@@ -110,7 +113,7 @@ public class Gcli {
 
     private void addFile(String[] args){
         if(args.length < 3){
-            System.out.println("addFile: missing operands: addFile <parentName> <name> <size>");
+            System.out.println(Error.MISSING_OPS_ADD_FILE);
             return;
         }
         String parentName = args[0];
@@ -121,7 +124,7 @@ public class Gcli {
 
     private void addDir(String[] args){
         if(args.length < 2){
-            System.out.println("addDir: missing operands: addFile <parentName> <name>");
+            System.out.println(Error.MISSING_OPS_ADD_DIR);
             return;
         }
         String parentName = args[0];
@@ -129,14 +132,36 @@ public class Gcli {
         this.explorer.addDir(parentName, name);
     }
 
+    private void delete(String[] args){
+        if(args.length < 1){
+            System.out.println(Error.MISSING_OPS_DELETE);
+            return;
+        }
+        String name = args[0];
+        this.explorer.delete(name);
+    }
+
+    private void deleteFromCurrentDirectory(String[] args){
+        if(args.length < 1){
+            System.out.println(Error.MISSING_OPS_DELETE);
+            return;
+        }
+        String name = args[0];
+        this.explorer.deleteFromCurrentDirectory(name);
+    }
+
     private void printHelp(String[] args){
 
         System.out.print("\nCommands:\n" +
-                " help                 This help message\n" +
-                " addFile, touch       Add a new file under the Directory branch\n" +
-                " addDir, mkdir        Add a new Directory under the parent Directory\n" +
-                " delete, rm           Delete the Directory or the file with this name\n" +
-                " showFileSystem, ls   Display all files & directories with their hierarchical structure\n\n" +
-                "Arguments should not contain spaces\n\n");
+            " help                                  This help message\n" +
+            " addFile <parentName> <name> <size>    Add a new file under the Directory branch\n" +
+            " addDir  <parentName> <name>           Add a new Directory under the parent Directory\n" +
+            " delete  <name>                        Delete an item found somewhere in the file system\n" +
+            " showFileSystem                        List all files & directories with their hierarchical structure\n" +
+            " rm                                    Delete an item found in current folder with this name\n" +
+            " ls                                    List current directory\n" +
+            "\n" +
+            "Arguments should not contain spaces\n\n");
+
     }
 }

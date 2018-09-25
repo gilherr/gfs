@@ -47,8 +47,8 @@ public class Directory extends BaseFsItem{
         return null;
     }
 
-    public BaseFsItem find(String name){
-        return Directory.find(this,name,true);
+    public BaseFsItem findInCurrentDir(String name){
+        return Directory.find(this,name,false);
     }
 
     private static void printContentRecursively(Directory dir, int indent, Boolean isRecursive){

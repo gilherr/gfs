@@ -9,9 +9,10 @@ public class UserInput {
     private Scanner scanner = new Scanner(System.in);
 
     public String command = "";
-    public String[] args = {};
+    public String[] args;
 
     public void read() {
+        this.args = new String[]{};
         String raw;
         raw = this.scanner.nextLine().trim();
         ArrayList<String> split = new ArrayList<>(Arrays.asList(raw.split(" +")));
