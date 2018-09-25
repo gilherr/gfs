@@ -14,7 +14,7 @@ public class File extends BaseFsItem {
 
     public void print(){
         DateFormat dateFormat = new SimpleDateFormat("MMM d HH:mm");
-        System.out.println(super.name + " " + this.size + "K " + dateFormat.format(super.creationDate));
+        System.out.println(this.size + "K " + dateFormat.format(super.creationDate) + " " + super.name);
     }
 
     @Override
