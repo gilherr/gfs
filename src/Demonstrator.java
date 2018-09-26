@@ -5,31 +5,32 @@ import G_FS.Gxplorer;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * A user view that demonstrate the different operations of the file-system
+ */
 public class Demonstrator {
 
     static int getUserInput() {
 
         Scanner scanner = new Scanner(System.in);
-        boolean invalidInput = true;
-        int selection = -1;
+        boolean waitingForInput = true;
+        String selection = "-1";
 
         System.out.println("Choose demonstration type:");
-        System.out.println("    1: Basic Example - Run a demo that calls the required functions");
+        System.out.println("    1: CLI - Run an interactive cli and control the file-system");
+        System.out.println("    2: Basic Example - Run a demo that calls the required functions");
         System.out.println("                       addFile, addDir, delete, showFileSystem");
-        System.out.println("    2: CLI - Run an interactive cli and control the file-system");
 
-        while (invalidInput) {
-            try {
-                selection = scanner.nextInt();
-                if (selection == 1 || selection == 2)
-                    invalidInput = false;
-            }
-            catch (InputMismatchException e){
+        while (waitingForInput) {
+
+            selection = scanner.next().substring(0,1);
+            if (selection.matches("[1|2]"))
+                waitingForInput = false;
+            else
                 System.out.println("Select '1' or '2'");
-            }
         }
 
-        return selection;
+        return Integer.parseInt(selection);
     }
 
     static void runCliExplorer() {
