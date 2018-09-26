@@ -60,3 +60,15 @@ The design should include:
 
 * The classes that will be involved in the program and the relationship between them.
 * The major methods and members of each class
+
+------------------
+
+## Final Design
+
+### GFS Internals
+
+![Basic Explorer](/assets/ClassDiagramBasicExplorer.png)
+
+### CLI Explorer
+
+![CLI Explorer](/assets/ClassDiagramCli.png)
