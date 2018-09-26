@@ -3,6 +3,9 @@ package G_FS;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+/**
+ * A file-system item that represent data written to disk.
+ */
 class File extends BaseFsItem {
 
     private int size;

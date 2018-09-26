@@ -1,5 +1,8 @@
 package G_FS;
 
+/**
+ * A basic controller that exposes fundamental operations to external packages.
+ */
 public class Gxplorer implements ExplorerBasic {
 
     Directory ground = new Directory("");
@@ -7,6 +10,8 @@ public class Gxplorer implements ExplorerBasic {
     public Gxplorer() {
         this.ground.addItem(new Directory("/"));
     }
+
+    ///////////////////////Requested Functions////////////////////////
 
     public void addFile (String parentDirName, String fileName, int fileSize){
         File newFile = new File(fileName, fileSize);
@@ -33,7 +38,7 @@ public class Gxplorer implements ExplorerBasic {
         this.ground.printContent(true);
     }
 
-    /*************************************************/
+    ///////////////////////Utility Functions/////////////////////////
 
     private void addItem(BaseFsItem item, String parentDirName){
         Directory parent;

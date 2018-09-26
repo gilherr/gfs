@@ -4,6 +4,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 
+/**
+ * A file-system item that can hold other items in it.
+ * Items are stored in a linked list to allow unlimited items in each directory.
+ */
 public class Directory extends BaseFsItem{
 
     private LinkedList<BaseFsItem> content = new LinkedList<>();
@@ -29,7 +33,7 @@ public class Directory extends BaseFsItem{
      * Find an item in a directory
      * @param dir The directory to start the search from
      * @param name The name of the item that is being searched
-     * @param isRecursive Recursively search sub-directories
+     * @param isRecursive Boolean indicating if the search should include sub-directories
      * @return BaseFsItem if item was found, else null
      */
     public static BaseFsItem find(Directory dir,String name, Boolean isRecursive){
@@ -47,6 +51,11 @@ public class Directory extends BaseFsItem{
         return null;
     }
 
+    /**
+     * Finds an item in current directory only
+     * @param name
+     * @return
+     */
     public BaseFsItem findInCurrentDir(String name){
         return Directory.find(this,name,false);
     }

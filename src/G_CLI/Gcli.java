@@ -6,6 +6,9 @@ import G_FS.GxplorerForCli;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * G-CLI is a user interface that lets the user manipulate the G file system
+ */
 public class Gcli {
 
     private Map<String, Command> commands;

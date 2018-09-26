@@ -1,5 +1,8 @@
 package G_FS;
 
+/**
+ * A controller that exposes the basic and cli-related operations to external packages.
+ */
 public class GxplorerForCli extends Gxplorer implements ExplorerCli {
 
     private Directory currentDir;
@@ -9,6 +12,10 @@ public class GxplorerForCli extends Gxplorer implements ExplorerCli {
         this.currentDir = (Directory) Directory.find(super.ground, "/", false);
     }
 
+    /**
+     * Find the requested directory in the entire file system and set it as currentDir.
+     * @param name The requested directory to become currentDir
+     */
     public void setCurrentDirGlobal(String name){
         BaseFsItem foundDir = Directory.find(super.ground, name, true);
         setFoundDir(foundDir);
@@ -19,6 +26,9 @@ public class GxplorerForCli extends Gxplorer implements ExplorerCli {
         setFoundDir(foundDir);
     }
 
+    /**
+     * Turns the parent of currentDir into the currentDir itself.
+     */
     public void changeDirOneStepUp(){
         if(this.currentDir.parent != null)
             this.currentDir = this.currentDir.parent;

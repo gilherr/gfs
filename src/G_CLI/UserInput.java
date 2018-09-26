@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * A simple user input that handles user commands from the cli
+ */
 class UserInput {
 
     private Scanner scanner = new Scanner(System.in);

@@ -3,7 +3,7 @@ package G_FS;
 import java.util.Date;
 
 /**
- * Describes the basics of any item that the file system holds.
+ * Describes the basics of any item on the file system.
  */
 public class BaseFsItem {
 
