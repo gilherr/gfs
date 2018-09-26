@@ -1,5 +1,7 @@
 package G_FS;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 
 public class Directory extends BaseFsItem{
@@ -55,7 +57,7 @@ public class Directory extends BaseFsItem{
                 System.out.print("-");
             item.print();
             if(isRecursive && item instanceof Directory){
-                printContentRecursively((Directory) item, ++indent, isRecursive);
+                printContentRecursively((Directory) item, ++indent, true);
                 indent--;
             }
 
@@ -72,4 +74,8 @@ public class Directory extends BaseFsItem{
         this.content.remove(item);
     }
 
+    void print() {
+        DateFormat dateFormat = new SimpleDateFormat("MMM d HH:mm");
+        System.out.println(dateFormat.format(super.creationDate) + " " + super.name);
+    }
 }
