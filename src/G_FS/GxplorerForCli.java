@@ -2,7 +2,7 @@ package G_FS;
 
 public class GxplorerForCli extends Gxplorer implements ExplorerCli {
 
-    private Directory currentDir = null;
+    private Directory currentDir;
 
     public GxplorerForCli() {
         super();

@@ -7,12 +7,8 @@ public enum Error {
 
     private final String msg;
 
-    private Error(String msg) {
+    Error(String msg) {
         this.msg = msg;
-    }
-
-    public String getMsg() {
-        return msg;
     }
 
     @Override

@@ -158,7 +158,7 @@ public class Gcli {
             " addFile <parentName> <name> <size>    Add a new file under the Directory branch\n" +
             " addDir  <parentName> <name>           Add a new Directory under the parent Directory\n" +
             " delete  <name>                        Delete an item found somewhere in the file system\n" +
-            " showFileSystem, ll                    List all files & directories with their hierarchical structure\n" +
+            " showFileSystem or ll                  List all files & directories with their hierarchical structure\n" +
             " rm                                    Delete an item found in current folder with this name\n" +
             " ls                                    List current directory\n" +
             " pwd                                   Print working directory\n" +

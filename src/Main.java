@@ -1,9 +1,3 @@
-import G_CLI.Gcli;
-import G_FS.*;
-
-import java.util.Scanner;
-
-
 public class Main {
 
     public static void main(String[] args) {

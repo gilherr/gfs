@@ -1,6 +1,6 @@
 package G_CLI;
 
-public interface Command {
+interface Command {
     void run(String[] args);
 
 }

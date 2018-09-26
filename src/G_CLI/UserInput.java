@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class UserInput {
+class UserInput {
 
     private Scanner scanner = new Scanner(System.in);
 

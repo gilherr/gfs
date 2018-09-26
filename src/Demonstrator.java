@@ -10,7 +10,7 @@ public class Demonstrator {
     static int getUserInput() {
 
         Scanner scanner = new Scanner(System.in);
-        Boolean invalidInput = true;
+        boolean invalidInput = true;
         int selection = -1;
 
         System.out.println("Choose demonstration type:");

@@ -2,15 +2,15 @@ package G_FS;
 
 public interface ExplorerCli extends ExplorerBasic {
 
-    public void setCurrentDirGlobal(String name);
+    void setCurrentDirGlobal(String name);
 
-    public void changeDir(String name);
+    void changeDir(String name);
 
-    public String getCurrentDirPath();
+    String getCurrentDirPath();
 
-    public void listCurrentFolder();
+    void listCurrentFolder();
 
-    public void deleteFromCurrentDirectory(String name);
+    void deleteFromCurrentDirectory(String name);
 
-    public void changeDirOneStepUp();
+    void changeDirOneStepUp();
 }

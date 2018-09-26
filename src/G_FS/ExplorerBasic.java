@@ -2,12 +2,12 @@ package G_FS;
 
 public interface ExplorerBasic {
 
-    public void addFile (String parentDirName, String fileName, int fileSize);
+    void addFile(String parentDirName, String fileName, int fileSize);
 
-    public void addDir (String parentDirName, String dirName);
+    void addDir(String parentDirName, String dirName);
 
-    public void delete (String name);
+    void delete(String name);
 
-    public void showFileSystem ();
+    void showFileSystem();
 
 }

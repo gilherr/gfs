@@ -64,7 +64,7 @@ public class Gxplorer implements ExplorerBasic {
     }
 
     private Boolean isItemExists(String itemName) {
-        return Directory.find(this.ground,itemName,true) != null ? true : false;
+        return Directory.find(this.ground, itemName, true) != null;
     }
 
 }
